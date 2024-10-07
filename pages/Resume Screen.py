@@ -1,4 +1,6 @@
 # langchain: https://python.langchain.com/
+import nltk
+nltk.download('punkt')
 import os
 from dataclasses import dataclass
 import streamlit as st
@@ -27,7 +29,7 @@ def load_lottiefile(filepath: str):
 st_lottie(load_lottiefile("images/welcome.json"), speed=1, reverse=False, loop=True, quality="high", height=300)
 # st.markdown("""solutions to potential errors:""")
 
-st.image(im, width=650)
+
 
 st.markdown("""\n""")
 position = st.selectbox("Select the position you are scanning profile for", ["Java Developer", "Software Developer"])
@@ -89,8 +91,8 @@ def initialize_session_state_resume():
         llm = ChatOpenAI(
             model_name="gpt-3.5-turbo",
             temperature=0.5,
-            api_key=os.environ.get('OPENAI_API_KEY'))
-
+            api_key='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'
+        )
         st.session_state.resume_guideline = RetrievalQA.from_chain_type(
             llm=llm,
             chain_type_kwargs=st.session_state.chain_type_kwargs, chain_type='stuff',
@@ -102,7 +104,7 @@ def initialize_session_state_resume():
         llm = ChatOpenAI(
             model_name="gpt-3.5-turbo",
             temperature=0.7,
-            api_key=os.environ.get('OPENAI_API_KEY'))
+            api_key='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')
 
         PROMPT = PromptTemplate(
             input_variables=["history", "input"],
@@ -131,7 +133,7 @@ def initialize_session_state_resume():
     if "resume_feedback" not in st.session_state:
         llm = ChatOpenAI(
             model_name="gpt-3.5-turbo",
-            temperature=0.5, api_key=os.environ.get('OPENAI_API_KEY'))
+            temperature=0.5, api_key='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')
         st.session_state.resume_feedback = ConversationChain(
             prompt=PromptTemplate(input_variables=["history", "input"], template=templates.feedback_template),
             llm=llm,
